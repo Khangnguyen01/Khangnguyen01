@@ -1,87 +1,105 @@
-<!-- Portfolio-style GitHub Profile for Nguyen Khang Phuc -->
-
+<!-- Banner -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=220&color=0:22c55e,100:6366f1&text=Nguyen Khang Phuc&fontAlign=50&fontAlignY=40&fontColor=ffffff&fontSize=48&desc=Data%20Analyst%20%E2%80%A2%20SQL%20%E2%80%A2%20Python%20%E2%80%A2%20BI&descAlign=50&descAlignY=65&section=header&animation=fadeIn" alt="Nguyen Khang Phuc banner" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&height=220&text=Khang%20Phuc%20Nguyen&fontSize=44&desc=Data%20Analyst%20%7C%20ML%20%7C%20BI&color=gradient&fontAlign=50&descAlign=50&animation=fadeIn" alt="header" />
 </p>
 
+<!-- Typing tagline -->
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&duration=2500&pause=800&width=700&lines=Decisions+%3E+dashboards.;Turning+messy+data+into+clear+choices.;Predicting+LTV%2FROAS+with+early+signals." alt="typing tagline" />
+  <a href="https://git.io/typing-svg">
+    <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=20&pause=1200&center=true&vCenter=true&width=600&lines=I+transform+data+into+insights;Available+for+work;Python+%E2%80%A2+SQL+%E2%80%A2+BigQuery+%E2%80%A2+Power+BI;Machine+Learning+%E2%80%A2+Storytelling+%E2%80%A2+Dashboards" alt="Typing SVG" />
+  </a>
 </p>
 
+<!-- Badges -->
 <p align="center">
-  <a href="https://www.linkedin.com/in/npkhang0304/">
-    <img src="https://img.shields.io/badge/LinkedIn-Profile-0A66C2?logo=linkedin&logoColor=white" alt="LinkedIn" />
-  </a>
-  <a href="mailto:khangnguyenforwork@outlook.com">
-    <img src="https://img.shields.io/badge/Email-khangnguyenforwork%40outlook.com-464EB8?logo=microsoftoutlook&logoColor=white" alt="Email" />
-  </a>
-  <a href="tel:+84889559390">
-    <img src="https://img.shields.io/badge/Phone-%2B84%2088%20955%209390-22c55e?logo=phonepe&logoColor=white" alt="Phone" />
-  </a>
-  <img src="https://komarev.com/ghpvc/?username=Khangnguyen01&style=flat" alt="profile views" />
+  <a href="mailto:khangnguyenforwork@outlook.com"><img alt="Email" src="https://img.shields.io/badge/Email-khangnguyenforwork%40outlook.com-6C63FF?style=for-the-badge&logo=microsoftoutlook&logoColor=white"></a>
+  <a href="https://www.linkedin.com/in/npkhang0304/"><img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"></a>
+  <a href="https://github.com/Khangnguyen01"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-Khangnguyen01-181717?style=for-the-badge&logo=github&logoColor=white"></a>
+  <img alt="Status" src="https://img.shields.io/badge/Available%20for%20Work-Yes-FF5A5F?style=for-the-badge">
 </p>
 
 ---
 
-### 🧭 Focus
-- Growth analytics: **ROAS/LTV**, cohorts, funnels, incrementality
-- Experimentation: design, guardrails, practical readouts
-- Predictive modeling: **classification & regression** for user behavior
-- BI delivery: clean datasets → fast visuals → crisp, trustworthy stories
+### 🧭 About
+I’m a data analyst who turns raw numbers into **clear, actionable stories**—from SQL wrangling and Python modeling to dashboards that drive decisions. I work across **Pandas, NumPy, scikit-learn, Matplotlib**, and **BI (Power BI / Looker Studio)** to push projects from questions ➜ insights ➜ outcomes. I enjoy cohorting, A/B testing, LTV modeling, and weaving the results into crisp business narratives.
 
-### 🧰 Toolbox
-<p align="center">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="42" alt="python" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" height="42" alt="pandas" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" height="42" alt="numpy" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" height="42" alt="scikit-learn" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" height="42" alt="gcp" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlebigquery/googlebigquery-plain-wordmark.svg" height="42" alt="bigquery" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" height="42" alt="mongodb" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/powerbi/powerbi-original.svg" height="42" alt="powerbi" />
+---
+
+### 🛠️ Tech Stack
+<p>
+  <img src="https://skillicons.dev/icons?i=python,pandas,numpy,sklearn,matplotlib,git,github,mongodb,gcp,vscode" />
+</p>
+<p>
+  <img src="https://skillicons.dev/icons?i=bigquery" />
+  <img src="https://img.shields.io/badge/Power%20BI-FAE100?logo=powerbi&logoColor=000&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Looker%20Studio-4285F4?logo=looker&logoColor=fff&style=for-the-badge" />
 </p>
 
 ---
 
-## 🚀 Featured & Recent Repos
-<!-- These cards auto-update by workflow. Keep the markers exactly once. -->
-<!-- AUTO-CARDS:START -->
-<p align="center">
+### ⭐ Featured Projects
+<!-- Swap any repo names you prefer. These cards are dynamic images and always up-to-date. -->
+<p>
   <a href="https://github.com/Khangnguyen01/Bulk-Create-Flatten-Table-BigQuery">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=Bulk-Create-Flatten-Table-BigQuery&hide_border=true" alt="Bulk-Create-Flatten-Table-BigQuery" />
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=Bulk-Create-Flatten-Table-BigQuery&theme=transparent&hide_border=true" />
   </a>
   <a href="https://github.com/Khangnguyen01/BS-Auto-Weekly-Marketing-Data-Report">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=BS-Auto-Weekly-Marketing-Data-Report&hide_border=true" alt="BS-Auto-Weekly-Marketing-Data-Report" />
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=BS-Auto-Weekly-Marketing-Data-Report&theme=transparent&hide_border=true" />
   </a>
 </p>
-<p align="center">
-  <a href="https://github.com/Khangnguyen01/Predict-Campaign-LTV">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=Predict-Campaign-LTV&hide_border=true" alt="Predict-Campaign-LTV" />
-  </a>
+<p>
   <a href="https://github.com/Khangnguyen01/Predict-IAP-Users-from-Login-Phrase">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=Predict-IAP-Users-from-Login-Phrase&hide_border=true" alt="Predict-IAP-Users-from-Login-Phrase" />
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=Predict-IAP-Users-from-Login-Phrase&theme=transparent&hide_border=true" />
+  </a>
+  <a href="https://github.com/Khangnguyen01/Analyst-IAP-Users-Behavior">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=Analyst-IAP-Users-Behavior&theme=transparent&hide_border=true" />
   </a>
 </p>
-<!-- AUTO-CARDS:END -->
-
----
-
-## 📊 Stats & Activity
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Khangnguyen01&show_icons=true&rank_icon=github&include_all_commits=true&hide_border=true" height="150" alt="GitHub Stats" />
-  <img src="https://streak-stats.demolab.com?user=Khangnguyen01&hide_border=true" height="150" alt="Streak Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Khangnguyen01&layout=compact&hide_border=true" height="150" alt="Top Languages" />
+<p>
+  <a href="https://github.com/Khangnguyen01/Predict-Campaign-LTV">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=Predict-Campaign-LTV&theme=transparent&hide_border=true" />
+  </a>
 </p>
 
 ---
 
-## 🐍 Contributions (animated)
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Khangnguyen01/Khangnguyen01/output/snake.svg" alt="snake animation" />
+### 🧩 Latest Projects (auto-updated)
+<!-- LATEST-REPOS:START -->
+<!-- The workflow will insert a 2x/3x grid of pinned cards here. -->
+<!-- LATEST-REPOS:END -->
+
+> Tip: Click any card to jump to the repo. The grid above refreshes automatically every day.
+
+---
+
+### 💼 Experience
+- **Data Analyst – FPT AdOne · PixOn Game Studio** (Mar 2025 – Present)  
+  Game analytics, experiment design, Looker Studio dashboards, user behavior, ML (IAP prediction, LTV).
+- **Data Analyst – BlueStars LLC** (Aug 2023 – Mar 2025)  
+  Power BI dashboards, marketing optimization, regression & classification for sales and product success.
+
+---
+
+### 🎓 Education
+**National Economics University** — Marketing Management (2019–2023)  
+GPA: 3.61/4.0 · High Distinction · Top 10 GPA · Master Scholarship
+
+---
+
+### 📈 Fun (always live)
+<p>
+  <img src="https://github-readme-stats.vercel.app/api?username=Khangnguyen01&show_icons=true&theme=transparent&hide_border=true" alt="stats" />
+  <img src="https://github-readme-streak-stats.herokuapp.com?user=Khangnguyen01&theme=transparent&hide_border=true" alt="streak" />
 </p>
 
 ---
 
+### 🤝 Contact
+<a href="mailto:khangnguyenforwork@outlook.com">Email</a> •
+<a href="https://www.linkedin.com/in/npkhang0304/">LinkedIn</a> •
+<a href="https://github.com/Khangnguyen01">GitHub</a>
+
+<!-- Footer -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=140&color=0:6366f1,100:22c55e&section=footer" alt="footer wave" />
+  <img src="https://capsule-render.vercel.app/api?type=rect&section=footer&height=60&color=gradient" />
 </p>
