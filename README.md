@@ -1,26 +1,13 @@
-<!--
-  Portfolio-style GitHub Profile README for Nguyen Khang Phuc
-  Features:
-  - Animated banner + typing line
-  - Icon grid (devicon)
-  - Auto-updating repo "cards" (via GitHub Actions)
-  - Stats row, streak, top languages
-  - Animated contribution "snake"
-  Notes:
-  - GitHub sanitizes JS/CSS; animations rely on SVG/GIF or external renderers.
--->
+<!-- Portfolio-style GitHub Profile for Nguyen Khang Phuc -->
 
-<!-- Header wave banner -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=220&color=0:6EE7B7,100:6366F1&text=Nguyen Khang Phuc&fontAlign=50&fontAlignY=40&fontColor=ffffff&fontSize=48&desc=Data%20Analyst%20%7C%20SQL%2C%20Python%2C%20BI&descAlign=50&descAlignY=65&section=header&animation=fadeIn" alt="Nguyen Khang Phuc banner" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&height=220&color=0:22c55e,100:6366f1&text=Nguyen Khang Phuc&fontAlign=50&fontAlignY=40&fontColor=ffffff&fontSize=48&desc=Data%20Analyst%20%E2%80%A2%20SQL%20%E2%80%A2%20Python%20%E2%80%A2%20BI&descAlign=50&descAlignY=65&section=header&animation=fadeIn" alt="Nguyen Khang Phuc banner" />
 </p>
 
-<!-- Typing tagline -->
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&duration=2500&pause=800&multiline=true&width=700&height=80&lines=Decisions+%3E+dashboards.;Turning+messy+data+into+clear+choices." alt="typing tagline" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&duration=2500&pause=800&width=700&lines=Decisions+%3E+dashboards.;Turning+messy+data+into+clear+choices.;Predicting+LTV%2FROAS+with+early+signals." alt="typing tagline" />
 </p>
 
-<!-- Social badges -->
 <p align="center">
   <a href="https://www.linkedin.com/in/npkhang0304/">
     <img src="https://img.shields.io/badge/LinkedIn-Profile-0A66C2?logo=linkedin&logoColor=white" alt="LinkedIn" />
@@ -29,37 +16,35 @@
     <img src="https://img.shields.io/badge/Email-khangnguyenforwork%40outlook.com-464EB8?logo=microsoftoutlook&logoColor=white" alt="Email" />
   </a>
   <a href="tel:+84889559390">
-    <img src="https://img.shields.io/badge/Phone-%2B84%2088%20955%209390-25A65B?logo=phonepe&logoColor=white" alt="Phone" />
+    <img src="https://img.shields.io/badge/Phone-%2B84%2088%20955%209390-22c55e?logo=phonepe&logoColor=white" alt="Phone" />
   </a>
   <img src="https://komarev.com/ghpvc/?username=Khangnguyen01&style=flat" alt="profile views" />
 </p>
 
 ---
 
-### 🧭 What I do
+### 🧭 Focus
 - Growth analytics: **ROAS/LTV**, cohorts, funnels, incrementality
-- Experimentation: design, guardrails, **practical readouts**
+- Experimentation: design, guardrails, practical readouts
 - Predictive modeling: **classification & regression** for user behavior
 - BI delivery: clean datasets → fast visuals → crisp, trustworthy stories
 
 ### 🧰 Toolbox
 <p align="center">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" alt="python" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" height="40" alt="pandas" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" height="40" alt="numpy" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" height="40" alt="scikit-learn" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" height="40" alt="gcp" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original-wordmark.svg" height="40" alt="gcp wordmark" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlebigquery/googlebigquery-plain-wordmark.svg" height="40" alt="bigquery" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" height="40" alt="mongodb" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/powerbi/powerbi-original.svg" height="40" alt="powerbi" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" height="40" alt="github" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="42" alt="python" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" height="42" alt="pandas" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" height="42" alt="numpy" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" height="42" alt="scikit-learn" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" height="42" alt="gcp" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlebigquery/googlebigquery-plain-wordmark.svg" height="42" alt="bigquery" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" height="42" alt="mongodb" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/powerbi/powerbi-original.svg" height="42" alt="powerbi" />
 </p>
 
 ---
 
 ## 🚀 Featured & Recent Repos
-<!-- The block below is replaced by a GitHub Action to auto-update repo cards. -->
+<!-- These cards auto-update by workflow. Keep the markers exactly once. -->
 <!-- AUTO-CARDS:START -->
 <p align="center">
   <a href="https://github.com/Khangnguyen01/Bulk-Create-Flatten-Table-BigQuery">
@@ -92,16 +77,11 @@
 
 ## 🐍 Contributions (animated)
 <p align="center">
-  <!-- This file is generated by the snake workflow -->
   <img src="https://raw.githubusercontent.com/Khangnguyen01/Khangnguyen01/output/snake.svg" alt="snake animation" />
 </p>
 
 ---
 
-<!-- Footer wave -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=160&color=0:6366F1,100:6EE7B7&section=footer" alt="footer wave" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&height=140&color=0:6366f1,100:22c55e&section=footer" alt="footer wave" />
 </p>
-
-<!-- Notes for maintainers (you) -->
-<sub><sup>Tip: If any card images fail to render, they usually recover on refresh (free renderers may rate-limit). For fully local images, fork those generators or swap to self-hosted instances.</sup></sub>
