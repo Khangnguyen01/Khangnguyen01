@@ -1,0 +1,52 @@
+name: Update dynamic repo cards
+on:
+  schedule:
+    - cron: "0 */12 * * *"   # every 12 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate repo cards block
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const username = "Khangnguyen01";
+            // Fetch repos
+            const repos = await github.paginate('GET /users/{username}/repos', {"username": username, per_page: 100, sort: "updated"});
+            // Filter out forks/archived
+            const filtered = repos.filter(r => !r.fork && !r.archived);
+            // Sort by stars desc, then recent push
+            filtered.sort((a, b) => (b.stargazers_count - a.stargazers_count) || (new Date(b.pushed_at) - new Date(a.pushed_at)));
+            const top = filtered.slice(0, 6);
+            const row1 = top.slice(0, 2).map(r => `  <a href="${r.html_url}">\n    <img src="https://github-readme-stats.vercel.app/api/pin/?username=${username}&repo=${r.name}&hide_border=true" alt="${r.name}" />\n  </a>`).join('\n');
+            const row2 = top.slice(2, 4).map(r => `  <a href="${r.html_url}">\n    <img src="https://github-readme-stats.vercel.app/api/pin/?username=${username}&repo=${r.name}&hide_border=true" alt="${r.name}" />\n  </a>`).join('\n');
+            const row3 = top.slice(4, 6).map(r => `  <a href="${r.html_url}">\n    <img src="https://github-readme-stats.vercel.app/api/pin/?username=${username}&repo=${r.name}&hide_border=true" alt="${r.name}" />\n  </a>`).join('\n');
+            const newBlock = `<!-- AUTO-CARDS:START -->\n<p align="center">\n${row1}\n</p>\n<p align="center">\n${row2}\n</p>\n<p align="center">\n${row3}\n</p>\n<!-- AUTO-CARDS:END -->`;
+
+            const readmePath = path.join(process.cwd(), "README.md");
+            const readme = fs.readFileSync(readmePath, "utf8");
+            const start = readme.indexOf("<!-- AUTO-CARDS:START -->");
+            const end = readme.indexOf("<!-- AUTO-CARDS:END -->") + "<!-- AUTO-CARDS:END -->".length;
+            if (start === -1 || end === -1) core.setFailed("AUTO-CARDS markers not found in README.md");
+
+            const updated = readme.slice(0, start) + newBlock + readme.slice(end);
+            fs.writeFileSync(readmePath, updated);
+
+      - name: Commit changes
+        run: |
+          git config user.name "Nguyen Khang Phuc (bot)"
+          git config user.email "actions@users.noreply.github.com"
+          git add README.md
+          git commit -m "chore(readme): auto-update repo cards" || echo "No changes to commit"
+          git push
