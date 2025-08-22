@@ -1,5 +1,9 @@
 name: Update dynamic repo cards
 on:
+  push:
+    paths:
+      - README.md
+      - .github/workflows/update_readme.yml
   schedule:
     - cron: "0 */12 * * *"   # every 12 hours
   workflow_dispatch:
@@ -21,24 +25,57 @@ jobs:
           script: |
             const fs = require('fs');
             const path = require('path');
+            const core = require('@actions/core');
+
             const username = "Khangnguyen01";
-            // Fetch repos
-            const repos = await github.paginate('GET /users/{username}/repos', {"username": username, per_page: 100, sort: "updated"});
+
+            // Fetch public repos for the user
+            const repos = await github.paginate(github.rest.repos.listForUser, {
+              username,
+              per_page: 100,
+              sort: "updated"
+            });
+
             // Filter out forks/archived
             const filtered = repos.filter(r => !r.fork && !r.archived);
-            // Sort by stars desc, then recent push
+
+            // Sort by stars desc, then most recently pushed
             filtered.sort((a, b) => (b.stargazers_count - a.stargazers_count) || (new Date(b.pushed_at) - new Date(a.pushed_at)));
+
             const top = filtered.slice(0, 6);
-            const row1 = top.slice(0, 2).map(r => `  <a href="${r.html_url}">\n    <img src="https://github-readme-stats.vercel.app/api/pin/?username=${username}&repo=${r.name}&hide_border=true" alt="${r.name}" />\n  </a>`).join('\n');
-            const row2 = top.slice(2, 4).map(r => `  <a href="${r.html_url}">\n    <img src="https://github-readme-stats.vercel.app/api/pin/?username=${username}&repo=${r.name}&hide_border=true" alt="${r.name}" />\n  </a>`).join('\n');
-            const row3 = top.slice(4, 6).map(r => `  <a href="${r.html_url}">\n    <img src="https://github-readme-stats.vercel.app/api/pin/?username=${username}&repo=${r.name}&hide_border=true" alt="${r.name}" />\n  </a>`).join('\n');
-            const newBlock = `<!-- AUTO-CARDS:START -->\n<p align="center">\n${row1}\n</p>\n<p align="center">\n${row2}\n</p>\n<p align="center">\n${row3}\n</p>\n<!-- AUTO-CARDS:END -->`;
+
+            function card(r) {
+              return `  <a href="${r.html_url}">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=${r.name}&hide_border=true" alt="${r.name}" />
+  </a>`;
+            }
+
+            const row1 = top.slice(0, 2).map(card).join('\n');
+            const row2 = top.slice(2, 4).map(card).join('\n');
+            const row3 = top.slice(4, 6).map(card).join('\n');
+
+            const newBlock = `<!-- AUTO-CARDS:START -->
+<p align="center">
+${row1}
+</p>
+<p align="center">
+${row2}
+</p>
+<p align="center">
+${row3}
+</p>
+<!-- AUTO-CARDS:END -->`;
 
             const readmePath = path.join(process.cwd(), "README.md");
             const readme = fs.readFileSync(readmePath, "utf8");
+
             const start = readme.indexOf("<!-- AUTO-CARDS:START -->");
             const end = readme.indexOf("<!-- AUTO-CARDS:END -->") + "<!-- AUTO-CARDS:END -->".length;
-            if (start === -1 || end === -1) core.setFailed("AUTO-CARDS markers not found in README.md");
+
+            if (start === -1 || end === -1) {
+              core.setFailed("AUTO-CARDS markers not found in README.md");
+              return;
+            }
 
             const updated = readme.slice(0, start) + newBlock + readme.slice(end);
             fs.writeFileSync(readmePath, updated);
