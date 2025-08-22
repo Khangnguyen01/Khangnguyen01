@@ -1,49 +1,69 @@
-name: Update dynamic repo cards
+name: Update README (latest repos)
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '0 */12 * * *'
-  push:
-    branches: ['main']
-    paths:
-      - README.md
-      - .github/workflows/update_readme.yml
-
-permissions:
-  contents: write
+    - cron: "17 7 * * *"   # daily ~14:17 ICT
+  workflow_dispatch:
 
 jobs:
-  refresh:
+  update-readme:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      # GITHUB_TOKEN is enough to read your public repos and commit to README
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node 20
-        uses: actions/setup-node@v4
+      - name: Build latest repo cards (Node)
+        uses: actions/github-script@v7
         with:
-          node-version: '20'
+          script: |
+            const fs = require('fs');
 
-      - name: Write updater script (base64)
-        shell: bash
-        run: |
-          echo 'aW1wb3J0IGZzIGZyb20gJ2ZzJzsKaW1wb3J0IHBhdGggZnJvbSAncGF0aCc7Cgpjb25zdCB0b2tlbiA9IHByb2Nlc3MuZW52LkdJVEhVQl9UT0tFTjsKY29uc3QgdXNlcm5hbWUgPSBwcm9jZXNzLmVudi5UQVJHRVRfVVNFUiB8fCAnS2hhbmduZ3V5ZW4wMSc7Cgpjb25zdCBoZWFkZXJzID0gewogIEF1dGhvcml6YXRpb246IGBCZWFyZXIgJHt0b2tlbn1gLAogIEFjY2VwdDogJ2FwcGxpY2F0aW9uL3ZuZC5naXRodWIranNvbicsCiAgJ1gtR2l0SHViLUFwaS1WZXJzaW9uJzogJzIwMjItMTEtMjgnCn07Cgphc3luYyBmdW5jdGlvbiBnZXRBbGxSZXBvcyh1c2VyKSB7CiAgbGV0IHBhZ2UgPSAxLCBhbGwgPSBbXTsKICB3aGlsZSAodHJ1ZSkgewogICAgY29uc3QgdXJsID0gYGh0dHBzOi8vYXBpLmdpdGh1Yi5jb20vdXNlcnMvJCR7dXNlcn0vcmVwb3M/cGVyX3BhZ2U9MTAwJnNvcnQ9dXBkYXRlZCZwYWdlPSQke3BhZ2V9YDsKICAgIGNvbnN0IHJlcyA9IGF3YWl0IGZldGNoKHVybCwgeyBoZWFkZXJzIH0pOwogICAgaWYgKCFyZXMub2spIHRocm93IG5ldyBFcnJvcihgR2l0SHViIEFQSSAkJHtyZXMuc3RhdHVzfTogJCR7YXdhaXQgcmVzLnRleHQoKX1gKTsKICAgIGNvbnN0IGJhdGNoID0gYXdhaXQgcmVzLmpzb24oKTsKICAgIGFsbCA9IGFsbC5jb25jYXQoYmF0Y2gpOwogICAgaWYgKGJhdGNoLmxlbmd0aCA8IDEwMCkgYnJlYWs7CiAgICBwYWdlKys7CiAgfQogIHJldHVybiBhbGw7Cn0KCmZ1bmN0aW9uIGNhcmRIVE1MKHVzZXIsIHJlcG8pIHsKICByZXR1cm4gWwogICAgYCAgPGEgaHJlZj0iJCR7cmVwby5odG1sX3VybH0iPmAsCiAgICBgICAgIDxpbWcgc3JjPSJodHRwczovL2dpdGh1Yi1yZWFkbWUtc3RhdHMudmVyY2VsLmFwcC9hcGkvcGluLz91c2VybmFtZT0kJHt1c2VyfSZyZXBvPSQke3JlcG8ubmFtZX0maGlkZV9ib3JkZXI9dHJ1ZSIgYWx0PSIkJHtyZXBvLm5hbWV9IiAvPmAsCiAgICBgICA8L2E+YAogIF0uam9pbignXG4nKTsKfQoKZnVuY3Rpb24gbWFrZUJsb2NrKHVzZXIsIHJlcG9zKSB7CiAgY29uc3Qgcm93cyA9IFsKICAgIHJlcG9zLnNsaWNlKDAsIDIpLm1hcChyID0+IGNhcmRIVE1MKHVzZXIsIHIpKS5qb2luKCdcbicpLAogICAgcmVwb3Muc2xpY2UoMiwgNCkubWFwKHIgPT4gY2FyZEhUTUwodXNlciwgcikpLmpvaW4oJ1xuJyksCiAgICByZXBvcy5zbGljZSg0LCA2KS5tYXAociA9PiBjYXJkSFRNTCh1c2VyLCByKSkuam9pbignXG4nKSwKICBdOwogIHJldHVybiBgPCEtLSBBVVRPLUNBUkRTOlNUQVJUIC0tPgo8cCBhbGlnbj0iY2VudGVyIj4KJCR7cm93c1swXX0KPC9wPgo8cCBhbGlnbj0iY2VudGVyIj4KJCR7cm93c1sxXX0KPC9wPgo8cCBhbGlnbj0iY2VudGVyIj4KJCR7cm93c1syXX0KPC9wPgo8IS0tIEFVVE8tQ0FSRFM6RU5EIC0tPmA7Cn0KCmFzeW5jIGZ1bmN0aW9uIG1haW4oKSB7CiAgY29uc3QgcmVwb3MgPSBhd2FpdCBnZXRBbGxSZXBvcyh1c2VybmFtZSk7CiAgY29uc3QgZmlsdGVyZWQgPSByZXBvcwogICAgLmZpbHRlcihyID0+ICFyLmZvcmsgJiYgIXIuYXJjaGl2ZWQpCiAgICAuc29ydCgoYSxiKSA9PiAoYi5zdGFyZ2F6ZXJzX2NvdW50IC0gYS5zdGFyZ2F6ZXJzX2NvdW50KSB8fCAobmV3IERhdGUoYi5wdXNoZWRfYXQpIC0gbmV3IERhdGUoYS5wdXNoZWRfYXQpKSkKICAgIC5zbGljZSgwLCA2KTsKCiAgY29uc3QgcmVhZG1lUGF0aCA9IHBhdGguam9pbihwcm9jZXNzLmN3ZCgpLCAnUkVBRE1FLm1kJyk7CiAgY29uc3QgcmVhZG1lID0gZnMucmVhZEZpbGVTeW5jKHJlYWRtZVBhdGgsICd1dGY4Jyk7CgogIGNvbnN0IHN0YXJ0ID0gcmVhZG1lLmluZGV4T2YoJzwhLS0gQVVUTy1DQVJEUzpTVEFSVCAtLT4nKTsKICBjb25zdCBlbmQgPSByZWFkbWUuaW5kZXhPZignPCEtLSBBVVRPLUNBUkRTOkVORCAtLT4nKSArICc8IS0tIEFVVE8tQ0FSRFM6RU5EIC0tPicubGVuZ3RoOwogIGlmIChzdGFydCA9PT0gLTEgfHwgZW5kID09PSAtMSkgdGhyb3cgbmV3IEVycm9yKCdBVVRPLUNBUkRTIG1hcmtlcnMgbm90IGZvdW5kIGluIFJFQURNRS5tZCcpOwoKICBjb25zdCBibG9jayA9IG1ha2VCbG9jayh1c2VybmFtZSwgZmlsdGVyZWQpOwogIGNvbnN0IHVwZGF0ZWQgPSByZWFkbWUuc2xpY2UoMCwgc3RhcnQpICsgYmxvY2sgKyByZWFkbWUuc2xpY2UoZW5kKTsKICBmcy53cml0ZUZpbGVTeW5jKHJlYWRtZVBhdGgsIHVwZGF0ZWQpOwogIGNvbnNvbGUubG9nKCdSRUFETUUgdXBkYXRlZC4nKTsKfQoKbWFpbigpLmNhdGNoKGVyciA9PiB7IGNvbnNvbGUuZXJyb3IoZXJyKTsgcHJvY2Vzcy5leGl0KDEpOyB9KTsK' | base64 -d > updater.mjs
+            // 1) Fetch most recently pushed public repos (owner == you)
+            const { data } = await github.graphql(`
+              query($login:String!) {
+                user(login:$login) {
+                  repositories(first: 6, privacy: PUBLIC, orderBy: {field: PUSHED_AT, direction: DESC}, isFork: false, ownerAffiliations: OWNER) {
+                    nodes { name }
+                  }
+                }
+              }`,
+              { login: context.repo.owner }
+            );
 
-      - name: Run updater
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TARGET_USER: Khangnguyen01
-        run: node updater.mjs
+            const repos = data.user.repositories.nodes.map(r => r.name);
+            const user  = context.repo.owner;
+
+            // 2) Make a neat grid of pin-cards (github-readme-stats)
+            const img = name => `https://github-readme-stats.vercel.app/api/pin/?username=${user}&repo=${name}&theme=transparent&hide_border=true`;
+            const link = name => `https://github.com/${user}/${name}`;
+
+            const rows = [];
+            for (let i=0;i<repos.length;i+=2) {
+              const a = repos[i], b = repos[i+1];
+              const row = [
+                `<a href="${link(a)}"><img src="${img(a)}" /></a>`,
+                b ? `<a href="${link(b)}"><img src="${img(b)}" /></a>` : ''
+              ].join('  ');
+              rows.push(`<p>${row}</p>`);
+            }
+            const block = rows.join('\n');
+
+            // 3) Inject between markers
+            const file = 'README.md';
+            const start = '<!-- LATEST-REPOS:START -->';
+            const end   = '<!-- LATEST-REPOS:END -->';
+            let readme = fs.readFileSync(file, 'utf8');
+
+            const pattern = new RegExp(`${start}[\\s\\S]*?${end}`);
+            readme = readme.replace(pattern, `${start}\n${block}\n${end}`);
+
+            fs.writeFileSync(file, readme, 'utf8');
+            core.info('README updated with latest repo cards');
 
       - name: Commit changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "chore(readme): auto-update repo cards"
-            git push
-          fi
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update latest repo cards"
+          file_pattern: README.md
