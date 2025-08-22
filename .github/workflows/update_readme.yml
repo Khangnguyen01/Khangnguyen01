@@ -1,25 +1,21 @@
 name: Update dynamic repo cards
 
 on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */12 * * *'
   push:
-    branches: [ "main" ]
+    branches: ['main']
     paths:
       - README.md
       - .github/workflows/update_readme.yml
-  schedule:
-    - cron: "0 */12 * * *"   # every 12 hours
-  workflow_dispatch:
 
 permissions:
   contents: write
 
-env:
-  TARGET_USER: Khangnguyen01
-
 jobs:
   refresh:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,100 +23,23 @@ jobs:
       - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
 
-      - name: Create updater script
+      - name: Write updater script (base64)
+        shell: bash
         run: |
-          cat > updater.mjs << 'EOF'
-          import fs from 'fs';
-          import path from 'path';
-          import {fileURLToPath} from 'url';
-
-          const token = process.env.GITHUB_TOKEN;
-          const username = process.env.TARGET_USER;
-
-          const headers = {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/vnd.github+json',
-            'X-GitHub-Api-Version': '2022-11-28'
-          };
-
-          async function getAllRepos(user) {
-            let page = 1, results = [];
-            while (true) {
-              const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=updated&page=${page}`;
-              const res = await fetch(url, { headers });
-              if (!res.ok) throw new Error(`GitHub API ${res.status}: ${await res.text()}`);
-              const batch = await res.json();
-              results = results.concat(batch);
-              if (batch.length < 100) break;
-              page++;
-            }
-            return results;
-          }
-
-          function cardHTML(username, repo) {
-            return [
-              `  <a href="${repo.html_url}">`,
-              `    <img src="https://github-readme-stats.vercel.app/api/pin/?username=${username}&repo=${repo.name}&hide_border=true" alt="${repo.name}" />`,
-              `  </a>`
-            ].join('\n');
-          }
-
-          function makeBlock(username, repos) {
-            const rows = [
-              repos.slice(0, 2).map(r => cardHTML(username, r)).join('\n'),
-              repos.slice(2, 4).map(r => cardHTML(username, r)).join('\n'),
-              repos.slice(4, 6).map(r => cardHTML(username, r)).join('\n'),
-            ];
-            return `<!-- AUTO-CARDS:START -->
-<p align="center">
-${rows[0]}
-</p>
-<p align="center">
-${rows[1]}
-</p>
-<p align="center">
-${rows[2]}
-</p>
-<!-- AUTO-CARDS:END -->`;
-          }
-
-          async function main() {
-            const repos = await getAllRepos(username);
-            const filtered = repos
-              .filter(r => !r.fork && !r.archived)
-              .sort((a,b) => (b.stargazers_count - a.stargazers_count) || (new Date(b.pushed_at) - new Date(a.pushed_at)))
-              .slice(0, 6);
-
-            const readmePath = path.join(process.cwd(), 'README.md');
-            const readme = fs.readFileSync(readmePath, 'utf8');
-
-            const start = readme.indexOf('<!-- AUTO-CARDS:START -->');
-            const end = readme.indexOf('<!-- AUTO-CARDS:END -->') + '<!-- AUTO-CARDS:END -->'.length;
-            if (start === -1 || end === -1) throw new Error('AUTO-CARDS markers not found in README.md');
-
-            const block = makeBlock(username, filtered);
-            const updated = readme.slice(0, start) + block + readme.slice(end);
-            fs.writeFileSync(readmePath, updated);
-            console.log('README updated successfully.');
-          }
-
-          main().catch(err => {
-            console.error(err);
-            process.exit(1);
-          });
-          EOF
+          echo 'aW1wb3J0IGZzIGZyb20gJ2ZzJzsKaW1wb3J0IHBhdGggZnJvbSAncGF0aCc7Cgpjb25zdCB0b2tlbiA9IHByb2Nlc3MuZW52LkdJVEhVQl9UT0tFTjsKY29uc3QgdXNlcm5hbWUgPSBwcm9jZXNzLmVudi5UQVJHRVRfVVNFUiB8fCAnS2hhbmduZ3V5ZW4wMSc7Cgpjb25zdCBoZWFkZXJzID0gewogIEF1dGhvcml6YXRpb246IGBCZWFyZXIgJHt0b2tlbn1gLAogIEFjY2VwdDogJ2FwcGxpY2F0aW9uL3ZuZC5naXRodWIranNvbicsCiAgJ1gtR2l0SHViLUFwaS1WZXJzaW9uJzogJzIwMjItMTEtMjgnCn07Cgphc3luYyBmdW5jdGlvbiBnZXRBbGxSZXBvcyh1c2VyKSB7CiAgbGV0IHBhZ2UgPSAxLCBhbGwgPSBbXTsKICB3aGlsZSAodHJ1ZSkgewogICAgY29uc3QgdXJsID0gYGh0dHBzOi8vYXBpLmdpdGh1Yi5jb20vdXNlcnMvJCR7dXNlcn0vcmVwb3M/cGVyX3BhZ2U9MTAwJnNvcnQ9dXBkYXRlZCZwYWdlPSQke3BhZ2V9YDsKICAgIGNvbnN0IHJlcyA9IGF3YWl0IGZldGNoKHVybCwgeyBoZWFkZXJzIH0pOwogICAgaWYgKCFyZXMub2spIHRocm93IG5ldyBFcnJvcihgR2l0SHViIEFQSSAkJHtyZXMuc3RhdHVzfTogJCR7YXdhaXQgcmVzLnRleHQoKX1gKTsKICAgIGNvbnN0IGJhdGNoID0gYXdhaXQgcmVzLmpzb24oKTsKICAgIGFsbCA9IGFsbC5jb25jYXQoYmF0Y2gpOwogICAgaWYgKGJhdGNoLmxlbmd0aCA8IDEwMCkgYnJlYWs7CiAgICBwYWdlKys7CiAgfQogIHJldHVybiBhbGw7Cn0KCmZ1bmN0aW9uIGNhcmRIVE1MKHVzZXIsIHJlcG8pIHsKICByZXR1cm4gWwogICAgYCAgPGEgaHJlZj0iJCR7cmVwby5odG1sX3VybH0iPmAsCiAgICBgICAgIDxpbWcgc3JjPSJodHRwczovL2dpdGh1Yi1yZWFkbWUtc3RhdHMudmVyY2VsLmFwcC9hcGkvcGluLz91c2VybmFtZT0kJHt1c2VyfSZyZXBvPSQke3JlcG8ubmFtZX0maGlkZV9ib3JkZXI9dHJ1ZSIgYWx0PSIkJHtyZXBvLm5hbWV9IiAvPmAsCiAgICBgICA8L2E+YAogIF0uam9pbignXG4nKTsKfQoKZnVuY3Rpb24gbWFrZUJsb2NrKHVzZXIsIHJlcG9zKSB7CiAgY29uc3Qgcm93cyA9IFsKICAgIHJlcG9zLnNsaWNlKDAsIDIpLm1hcChyID0+IGNhcmRIVE1MKHVzZXIsIHIpKS5qb2luKCdcbicpLAogICAgcmVwb3Muc2xpY2UoMiwgNCkubWFwKHIgPT4gY2FyZEhUTUwodXNlciwgcikpLmpvaW4oJ1xuJyksCiAgICByZXBvcy5zbGljZSg0LCA2KS5tYXAociA9PiBjYXJkSFRNTCh1c2VyLCByKSkuam9pbignXG4nKSwKICBdOwogIHJldHVybiBgPCEtLSBBVVRPLUNBUkRTOlNUQVJUIC0tPgo8cCBhbGlnbj0iY2VudGVyIj4KJCR7cm93c1swXX0KPC9wPgo8cCBhbGlnbj0iY2VudGVyIj4KJCR7cm93c1sxXX0KPC9wPgo8cCBhbGlnbj0iY2VudGVyIj4KJCR7cm93c1syXX0KPC9wPgo8IS0tIEFVVE8tQ0FSRFM6RU5EIC0tPmA7Cn0KCmFzeW5jIGZ1bmN0aW9uIG1haW4oKSB7CiAgY29uc3QgcmVwb3MgPSBhd2FpdCBnZXRBbGxSZXBvcyh1c2VybmFtZSk7CiAgY29uc3QgZmlsdGVyZWQgPSByZXBvcwogICAgLmZpbHRlcihyID0+ICFyLmZvcmsgJiYgIXIuYXJjaGl2ZWQpCiAgICAuc29ydCgoYSxiKSA9PiAoYi5zdGFyZ2F6ZXJzX2NvdW50IC0gYS5zdGFyZ2F6ZXJzX2NvdW50KSB8fCAobmV3IERhdGUoYi5wdXNoZWRfYXQpIC0gbmV3IERhdGUoYS5wdXNoZWRfYXQpKSkKICAgIC5zbGljZSgwLCA2KTsKCiAgY29uc3QgcmVhZG1lUGF0aCA9IHBhdGguam9pbihwcm9jZXNzLmN3ZCgpLCAnUkVBRE1FLm1kJyk7CiAgY29uc3QgcmVhZG1lID0gZnMucmVhZEZpbGVTeW5jKHJlYWRtZVBhdGgsICd1dGY4Jyk7CgogIGNvbnN0IHN0YXJ0ID0gcmVhZG1lLmluZGV4T2YoJzwhLS0gQVVUTy1DQVJEUzpTVEFSVCAtLT4nKTsKICBjb25zdCBlbmQgPSByZWFkbWUuaW5kZXhPZignPCEtLSBBVVRPLUNBUkRTOkVORCAtLT4nKSArICc8IS0tIEFVVE8tQ0FSRFM6RU5EIC0tPicubGVuZ3RoOwogIGlmIChzdGFydCA9PT0gLTEgfHwgZW5kID09PSAtMSkgdGhyb3cgbmV3IEVycm9yKCdBVVRPLUNBUkRTIG1hcmtlcnMgbm90IGZvdW5kIGluIFJFQURNRS5tZCcpOwoKICBjb25zdCBibG9jayA9IG1ha2VCbG9jayh1c2VybmFtZSwgZmlsdGVyZWQpOwogIGNvbnN0IHVwZGF0ZWQgPSByZWFkbWUuc2xpY2UoMCwgc3RhcnQpICsgYmxvY2sgKyByZWFkbWUuc2xpY2UoZW5kKTsKICBmcy53cml0ZUZpbGVTeW5jKHJlYWRtZVBhdGgsIHVwZGF0ZWQpOwogIGNvbnNvbGUubG9nKCdSRUFETUUgdXBkYXRlZC4nKTsKfQoKbWFpbigpLmNhdGNoKGVyciA9PiB7IGNvbnNvbGUuZXJyb3IoZXJyKTsgcHJvY2Vzcy5leGl0KDEpOyB9KTsK' | base64 -d > updater.mjs
 
       - name: Run updater
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_USER: Khangnguyen01
         run: node updater.mjs
 
       - name: Commit changes
         run: |
-          git config user.name "Nguyen Khang Phuc (bot)"
-          git config user.email "actions@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md
           if git diff --cached --quiet; then
             echo "No changes to commit"
