@@ -37,6 +37,7 @@ jobs:
           script: |
             const fs = require('fs');
             const path = require('path');
+            const core = require('@actions/core');
 
             const username = process.env.TARGET_USER;
             core.info(`Fetching repositories for: ${username}`);
@@ -55,9 +56,11 @@ jobs:
             const top = filtered.slice(0, 6);
 
             function card(r) {
-              return `  <a href="${r.html_url}">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=${r.name}&hide_border=true" alt="${r.name}" />
-  </a>`;
+              return [
+                `  <a href="$${r.html_url}">`,
+                `    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Khangnguyen01&repo=$${r.name}&hide_border=true" alt="$${r.name}" />`,
+                `  </a>`
+              ].join('\n');
             }
 
             const rows = [
@@ -68,13 +71,13 @@ jobs:
 
             const newBlock = `<!-- AUTO-CARDS:START -->
 <p align="center">
-${rows[0]}
+$${rows[0]}
 </p>
 <p align="center">
-${rows[1]}
+$${rows[1]}
 </p>
 <p align="center">
-${rows[2]}
+$${rows[2]}
 </p>
 <!-- AUTO-CARDS:END -->`;
 
