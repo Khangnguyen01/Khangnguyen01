@@ -1,47 +1,57 @@
 name: Update dynamic repo cards
+
 on:
   push:
+    branches: [ "main" ]
     paths:
       - README.md
       - .github/workflows/update_readme.yml
   schedule:
-    - cron: "0 */12 * * *"   # every 12 hours
+    - cron: "0 */12 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
+env:
+  TARGET_USER: Khangnguyen01
+
 jobs:
-  build:
+  refresh:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Generate repo cards block
         uses: actions/github-script@v7
+        env:
+          TARGET_USER: ${{ env.TARGET_USER }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
             const path = require('path');
-            const core = require('@actions/core');
 
-            const username = "Khangnguyen01";
+            const username = process.env.TARGET_USER;
+            core.info(`Fetching repositories for: ${username}`);
 
-            // Fetch public repos for the user
+            // Fetch public repos
             const repos = await github.paginate(github.rest.repos.listForUser, {
               username,
               per_page: 100,
               sort: "updated"
             });
 
-            // Filter out forks/archived
+            core.info(`Fetched ${repos.length} repos`);
+
             const filtered = repos.filter(r => !r.fork && !r.archived);
-
-            // Sort by stars desc, then most recently pushed
             filtered.sort((a, b) => (b.stargazers_count - a.stargazers_count) || (new Date(b.pushed_at) - new Date(a.pushed_at)));
-
             const top = filtered.slice(0, 6);
 
             function card(r) {
@@ -50,19 +60,21 @@ jobs:
   </a>`;
             }
 
-            const row1 = top.slice(0, 2).map(card).join('\n');
-            const row2 = top.slice(2, 4).map(card).join('\n');
-            const row3 = top.slice(4, 6).map(card).join('\n');
+            const rows = [
+              top.slice(0, 2).map(card).join('\n'),
+              top.slice(2, 4).map(card).join('\n'),
+              top.slice(4, 6).map(card).join('\n'),
+            ];
 
             const newBlock = `<!-- AUTO-CARDS:START -->
 <p align="center">
-${row1}
+${rows[0]}
 </p>
 <p align="center">
-${row2}
+${rows[1]}
 </p>
 <p align="center">
-${row3}
+${rows[2]}
 </p>
 <!-- AUTO-CARDS:END -->`;
 
@@ -74,16 +86,20 @@ ${row3}
 
             if (start === -1 || end === -1) {
               core.setFailed("AUTO-CARDS markers not found in README.md");
-              return;
+            } else {
+              const updated = readme.slice(0, start) + newBlock + readme.slice(end);
+              fs.writeFileSync(readmePath, updated);
+              core.info("README updated");
             }
-
-            const updated = readme.slice(0, start) + newBlock + readme.slice(end);
-            fs.writeFileSync(readmePath, updated);
 
       - name: Commit changes
         run: |
           git config user.name "Nguyen Khang Phuc (bot)"
           git config user.email "actions@users.noreply.github.com"
           git add README.md
-          git commit -m "chore(readme): auto-update repo cards" || echo "No changes to commit"
-          git push
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore(readme): auto-update repo cards"
+            git push
+          fi
