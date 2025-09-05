@@ -6,13 +6,13 @@
 
 <p>
 <a href="mailto:khangnguyenforwork@outlook.com">
-  <img src="https://img.shields.io/badge/📧%20Email-khangnguyenforwork@outlook.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=EA4335"/>
+  <img src="https://img.shields.io/badge/-Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=EA4335"/>
 </a>
 <a href="https://www.linkedin.com/in/npkhang0304/">
-  <img src="https://img.shields.io/badge/💼%20LinkedIn-Connect%20with%20me-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/>
+  <img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/>
 </a>
 <a href="https://github.com/Khangnguyen01">
-  <img src="https://img.shields.io/badge/🐙%20GitHub-Follow%20me-181717?style=for-the-badge&logo=github&logoColor=white"/>
+  <img src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
 </a>
 </p>
 
@@ -174,9 +174,9 @@ I'm passionate about transforming complex datasets into **meaningful insights** 
 
 <div align="center">
 
-[![Email](https://img.shields.io/badge/📧%20Email-khangnguyenforwork@outlook.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:khangnguyenforwork@outlook.com)
-[![LinkedIn](https://img.shields.io/badge/💼%20LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/npkhang0304/)
-[![GitHub](https://img.shields.io/badge/🐙%20GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Khangnguyen01)
+[![Email](https://img.shields.io/badge/-Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:khangnguyenforwork@outlook.com)
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/npkhang0304/)
+[![GitHub](https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Khangnguyen01)
 
 **💡 Always open to discussing data science, machine learning, and exciting collaboration opportunities!**
 
