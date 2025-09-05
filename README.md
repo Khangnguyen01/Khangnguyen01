@@ -166,7 +166,11 @@ I'm passionate about transforming complex datasets into **meaningful insights** 
 
 <div align="center">
 
-![Snake animation](https://github.com/Khangnguyen01/Khangnguyen01/blob/output/github-contribution-grid-snake-dark.svg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Khangnguyen01/Khangnguyen01/output/github-contribution-grid-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Khangnguyen01/Khangnguyen01/output/github-contribution-grid-snake.svg">
+  <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/Khangnguyen01/Khangnguyen01/output/github-contribution-grid-snake.svg">
+</picture>
 
 </div>
 
