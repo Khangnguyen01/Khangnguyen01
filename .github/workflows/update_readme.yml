@@ -1,69 +1,30 @@
-name: Update README (latest repos)
+name: Update README
 
 on:
   schedule:
-    - cron: "17 7 * * *"   # daily ~14:17 ICT
-  workflow_dispatch:
+    - cron: '0 0 * * *' # Daily at midnight UTC
+  workflow_dispatch: # Manual trigger
+  push:
+    branches: [ main ]
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      # GITHUB_TOKEN is enough to read your public repos and commit to README
+
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build latest repo cards (Node)
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
+    - name: Update README timestamp
+      run: |
+        sed -i 's/Last updated: .*/Last updated: $(date)/g' README.md || true
 
-            // 1) Fetch most recently pushed public repos (owner == you)
-            const { data } = await github.graphql(`
-              query($login:String!) {
-                user(login:$login) {
-                  repositories(first: 6, privacy: PUBLIC, orderBy: {field: PUSHED_AT, direction: DESC}, isFork: false, ownerAffiliations: OWNER) {
-                    nodes { name }
-                  }
-                }
-              }`,
-              { login: context.repo.owner }
-            );
-
-            const repos = data.user.repositories.nodes.map(r => r.name);
-            const user  = context.repo.owner;
-
-            // 2) Make a neat grid of pin-cards (github-readme-stats)
-            const img = name => `https://github-readme-stats.vercel.app/api/pin/?username=${user}&repo=${name}&theme=transparent&hide_border=true`;
-            const link = name => `https://github.com/${user}/${name}`;
-
-            const rows = [];
-            for (let i=0;i<repos.length;i+=2) {
-              const a = repos[i], b = repos[i+1];
-              const row = [
-                `<a href="${link(a)}"><img src="${img(a)}" /></a>`,
-                b ? `<a href="${link(b)}"><img src="${img(b)}" /></a>` : ''
-              ].join('  ');
-              rows.push(`<p>${row}</p>`);
-            }
-            const block = rows.join('\n');
-
-            // 3) Inject between markers
-            const file = 'README.md';
-            const start = '<!-- LATEST-REPOS:START -->';
-            const end   = '<!-- LATEST-REPOS:END -->';
-            let readme = fs.readFileSync(file, 'utf8');
-
-            const pattern = new RegExp(`${start}[\\s\\S]*?${end}`);
-            readme = readme.replace(pattern, `${start}\n${block}\n${end}`);
-
-            fs.writeFileSync(file, readme, 'utf8');
-            core.info('README updated with latest repo cards');
-
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: update latest repo cards"
-          file_pattern: README.md
+    - name: Commit changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git diff --staged --quiet || git commit -m "Auto-update README"
+        git push
