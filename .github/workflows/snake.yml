@@ -1,33 +1,30 @@
-name: Snake Animation Backup
+name: Update README
 
 on:
   schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
+    - cron: '0 0 * * *' # Daily at midnight UTC
+  workflow_dispatch: # Manual trigger
+  push:
+    branches: [ main ]
 
 jobs:
-  generate:
+  update-readme:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
+    - name: Update README timestamp
+      run: |
+        sed -i 's/Last updated: .*/Last updated: $(date)/g' README.md || true
 
-      - name: Install dependencies and generate snake
-        run: |
-          npx github-contribution-snake Khangnguyen01 \
-            --output=dist/github-contribution-grid-snake.svg \
-            --background-color=#161b22 \
-            --snake-color=#58a6ff
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: output
-
+    - name: Commit changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git diff --staged --quiet || git commit -m "Auto-update README"
+        git push
